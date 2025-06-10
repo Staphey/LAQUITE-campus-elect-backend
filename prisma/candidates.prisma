@@ -1,16 +1,16 @@
 model Position {
-  id        String      @id @default(uuid())
-  title     String
-  Candidate Candidate[]
-  Vote Vote []
+  id         String      @id @default(uuid())
+  title      String
+  electionId String
+  Candidate  Candidate[]
+  Election   Election    @relation(fields: [electionId], references: [id])
+  Vote       Vote[]
 }
 
 model Candidate {
-  candidateId String @id @default(uuid())
-
-  Position   Position @relation(fields: [positionId], references: [id])
-  positionId String
-
-  Student   Student @relation(fields: [studentId], references: [studentId])
-  studentId String
+  candidateId String   @id @default(uuid())
+  positionId  String
+  studentId   String
+  Position    Position @relation(fields: [positionId], references: [id])
+  Student     Student  @relation(fields: [studentId], references: [studentId])
 }

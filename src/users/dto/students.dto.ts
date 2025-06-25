@@ -33,3 +33,29 @@ export class ReturnedStudentDto implements Partial<Student> {
   })
   role: $Enums.Role;
 }
+
+export class CreateStudentDto {
+  @ApiProperty({
+    description: 'Unique identifier for the student',
+    example: 'AdDU2202',
+  })
+  studentId: string;
+
+  @ApiProperty({
+    description: 'Department the student belongs to',
+    example: 'Criminology',
+  })
+  department: string;
+
+  @ApiProperty({
+    description: 'Student email address',
+    example: 'abacus@addu.edu.ph',
+  })
+  email: string;
+
+  @ApiProperty({
+    description: 'Student\'s Full Name',
+    example: 'Ainel Bacus'
+  })
+  name: string;
+}

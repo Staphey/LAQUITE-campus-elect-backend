@@ -1,12 +1,13 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import {
+  ApiConflictResponse,
   ApiNotFoundResponse,
   ApiOperation,
   ApiQuery,
   ApiResponse,
 } from '@nestjs/swagger';
 import { UsersService } from 'src/users/users.service';
-import { ReturnedStudentDto } from 'src/users/dto/students.dto';
+import { CreateStudentDto, ReturnedStudentDto } from 'src/users/dto/students.dto';
 import { Student } from '@prisma/client';
 
 @Controller('users')
@@ -54,4 +55,23 @@ export class UsersController {
       id: id,
     });
   }
+
+  @Post('students')
+  @ApiOperation({
+    summary: 'Creates a new student',
+    description: 'Creates a new student in the system.',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Student created successfully.',
+    type: ReturnedStudentDto,
+  })
+  @ApiConflictResponse({
+    description: 'Student with this ID or email already exists.',
+  })
+  async createStudent(
+    @Body() createStudentDto: CreateStudentDto,
+  ): Promise<Student> {
+    return await this.usersService.createStudent(createStudentDto);
+}
 }
